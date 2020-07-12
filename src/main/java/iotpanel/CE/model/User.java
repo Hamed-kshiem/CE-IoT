@@ -1,27 +1,28 @@
 package iotpanel.CE.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "User_app")
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id")
-     int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    int id;
 
-    @Column(name="username")
-     String username;
+    @Column(name = "username")
+    String username;
 
-    @Column(name="first_name")
-     String first_name;
+    @Column(name = "first_name")
+    String first_name;
 
-    @Column(name="last_name")
-     String last_name;
+    @Column(name = "last_name")
+    String last_name;
 
-    @Column(name="password")
-     String password;
+    @Column(name = "password")
+    String password;
 
     public User() {
     }
