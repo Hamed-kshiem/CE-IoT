@@ -4,7 +4,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,8 @@ public class ChatWebSocketHandler implements WebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
         webSocketSessions.add(webSocketSession);
-
+        System.out.println(webSocketSessions.size());
+        System.out.println(webSocketSession.toString());
     }
 
     @Override
@@ -33,6 +33,8 @@ public class ChatWebSocketHandler implements WebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
         webSocketSessions.remove(webSocketSession);
+        System.out.println(webSocketSessions.size());
+
 
     }
 
