@@ -1,7 +1,11 @@
 package iotpanel.CE.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -12,7 +16,8 @@ public class Sensor {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name="id")
     String id;
 
@@ -20,22 +25,34 @@ public class Sensor {
     String name;
 
     @Column(name="Location")
-    String Location;
+    String location;
 
     @Column(name="Type")
-    String Type;
+    String type;
 
     @Column(name="active")
     boolean active;
 
     @Column(name="Release")
-    Date Release;
+    Date release;
 
     @Column(name="Value")
-    String Value;
+    String value;
 
     @Column(name="nfc")
     String nfc;
+
+    public Set<iotpanel.CE.model.SensorValues> getSensorValues() {
+        return SensorValues;
+    }
+
+    public void setSensorValues(Set<iotpanel.CE.model.SensorValues> sensorValues) {
+        SensorValues = sensorValues;
+    }
+
+    @OneToMany(mappedBy="sensor")
+    @JsonIgnore
+    private Set<SensorValues> SensorValues;
 
     public String getNfc() {
         return nfc;
@@ -62,19 +79,19 @@ public class Sensor {
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public boolean isActive() {
@@ -86,18 +103,33 @@ public class Sensor {
     }
 
     public Date getRelease() {
-        return Release;
+        return release;
     }
 
     public void setRelease(Date release) {
-        Release = release;
+        this.release = release;
     }
 
     public String getValue() {
-        return Value;
+        return value;
     }
 
     public void setValue(String value) {
-        Value = value;
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", Location='" + location + '\'' +
+                ", Type='" + type + '\'' +
+                ", active=" + active +
+                ", Release=" + release +
+                ", Value='" + value + '\'' +
+                ", nfc='" + nfc + '\'' +
+                ", SensorValues=" + SensorValues +
+                '}';
     }
 }
