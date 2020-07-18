@@ -1,7 +1,12 @@
 package iotpanel.CE.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "User_app")
@@ -23,6 +28,15 @@ public class User {
 
     @Column(name = "password")
     String password;
+
+    @Column(name = "fingerprint")
+    String fingerprint;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )    @JsonIgnore
+    private Set<LastLogin> lastlogins;
 
     public User() {
     }
@@ -62,6 +76,15 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public String getFingerprint() {
+        return fingerprint;
+    }
+
+    public void setFingerprint(String fingerprint) {
+        this.fingerprint = fingerprint;
+    }
+
 
     public void setPassword(String password) {
         this.password = password;
