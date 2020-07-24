@@ -24,8 +24,11 @@ public class Sensor {
     @Column(name="name")
     String name;
 
-    @Column(name="Location")
-    String location;
+    @Column(name="lat")
+    Double lat;
+
+    @Column(name="lng")
+    Double lng;
 
     @Column(name="Type")
     String type;
@@ -50,7 +53,7 @@ public class Sensor {
         SensorValues = sensorValues;
     }
 
-    @OneToMany(mappedBy="sensor")
+    @OneToMany(mappedBy="sensor", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<SensorValues> SensorValues;
 
@@ -76,14 +79,6 @@ public class Sensor {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getType() {
@@ -118,12 +113,27 @@ public class Sensor {
         this.value = value;
     }
 
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
     @Override
     public String toString() {
         return "Sensor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", Location='" + location + '\'' +
                 ", Type='" + type + '\'' +
                 ", active=" + active +
                 ", Release=" + release +
