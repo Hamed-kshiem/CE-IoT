@@ -15,16 +15,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    int id;
+    Integer id;
 
     @Column(name = "username")
     String username;
 
-    @Column(name = "first_name")
-    String first_name;
+    @Column(name = "firstname")
+    String firstname;
 
-    @Column(name = "last_name")
-    String last_name;
+    @Column(name = "lastname")
+    String lastname;
 
     @Column(name = "password")
     String password;
@@ -32,14 +32,16 @@ public class User {
     @Column(name = "fingerprint")
     String fingerprint;
 
-    @OneToMany(
+    @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )    @JsonIgnore
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    @JsonIgnore
     private Set<LastLogin> lastlogins;
 
-    public User() {
-    }
+    @OneToMany( fetch = FetchType.EAGER)
+    private Set<Sensor> subSensor;
 
     public int getId() {
         return id;
@@ -57,24 +59,28 @@ public class User {
         this.username = username;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFingerprint() {
@@ -85,8 +91,19 @@ public class User {
         this.fingerprint = fingerprint;
     }
 
+    public Set<LastLogin> getLastlogins() {
+        return lastlogins;
+    }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastlogins(Set<LastLogin> lastlogins) {
+        this.lastlogins = lastlogins;
+    }
+
+    public Set<Sensor> getSubSensor() {
+        return subSensor;
+    }
+
+    public void setSubSensor(Set<Sensor> subSensor) {
+        this.subSensor = subSensor;
     }
 }

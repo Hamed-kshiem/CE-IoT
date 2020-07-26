@@ -10,11 +10,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 @Entity
+@Table(name="lastlogin")
 public class LastLogin {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name="id")
     String id;
 

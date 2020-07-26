@@ -16,8 +16,8 @@ public class Sensor {
 
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name="id")
     String id;
 
@@ -45,11 +45,11 @@ public class Sensor {
     @Column(name="nfc")
     String nfc;
 
-    public Set<iotpanel.CE.model.SensorValues> getSensorValues() {
+    public Set<SensorValues> getSensorValues() {
         return SensorValues;
     }
 
-    public void setSensorValues(Set<iotpanel.CE.model.SensorValues> sensorValues) {
+    public void setSensorValues(Set<SensorValues> sensorValues) {
         SensorValues = sensorValues;
     }
 
