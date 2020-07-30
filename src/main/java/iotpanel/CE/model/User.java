@@ -3,6 +3,7 @@ package iotpanel.CE.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,19 +33,48 @@ public class User {
     @Column(name = "fingerprint")
     String fingerprint;
 
+    @Column(name = "email")
+    @Email
+    String email;
+
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    @JsonIgnore
     private Set<LastLogin> lastlogins;
 
-    @OneToMany( fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Sensor> subSensor;
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", password='" + password + '\'' +
+                ", fingerprint='" + fingerprint + '\'' +
+                ", lastlogins=" + lastlogins +
+                ", subSensor=" + subSensor +
+                '}';
     }
 
     public void setId(int id) {

@@ -12,9 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,10 +29,15 @@ public class UserController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity addSensor(@RequestBody User UserBody) {
+    public ResponseEntity addSensor(@RequestBody User UserBody, HttpServletRequest request) {
         System.out.println(UserBody.toString());
         user.save(UserBody);
-        return new ResponseEntity("Hello World!", HttpStatus.OK);
+        Map<String, Object> newUser = new HashMap<String, Object>();
+        newUser.put("User", UserBody);
+        newUser.put("status", HttpStatus.OK);
+        newUser.put("TimeStamp", new Date());
+        newUser.put("Data",request.getLocalAddr());
+        return new ResponseEntity(newUser, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -54,9 +59,9 @@ public class UserController {
             newUserObj.setPassword(newUser.getPassword());
             newUserObj.setUsername(newUser.getUsername());
             return user.save(newUserObj);
-        }).orElseGet(()->{
+        }).orElseGet(() -> {
             newUser.setId(id);
-           return user.save(newUser);
+            return user.save(newUser);
         });
     }
 }

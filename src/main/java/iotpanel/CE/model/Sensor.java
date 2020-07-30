@@ -11,39 +11,65 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name="Sensor")
+@Table(name = "Sensor")
 public class Sensor {
 
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name="id")
+    @Column(name = "id")
     String id;
 
-    @Column(name="name")
+    @Column(name = "name")
     String name;
 
-    @Column(name="lat")
+    @Column(name = "lat")
     Double lat;
 
-    @Column(name="lng")
+    @Column(name = "lng")
     Double lng;
 
-    @Column(name="Type")
+    @Column(name = "Type")
     String type;
 
-    @Column(name="active")
+    @Column(name = "valuetype")
+    String valuetype;
+
+    @Column(name = "active")
     boolean active;
 
-    @Column(name="Release")
+    @Column(name = "Release")
     Date release;
 
-    @Column(name="Value")
+    @Column(name = "Value")
     String value;
 
-    @Column(name="nfc")
+    @Column(name = "nfc")
     String nfc;
+
+    @OneToMany(mappedBy = "sensor", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<SensorValues> SensorValues;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<User> allowedUSers;
+
+    public String getValuetype() {
+        return valuetype;
+    }
+
+    public void setValuetype(String valuetype) {
+        this.valuetype = valuetype;
+    }
+
+    public Set<User> getAllowedUSers() {
+        return allowedUSers;
+    }
+
+    public void setAllowedUSers(Set<User> allowedUSers) {
+        this.allowedUSers = allowedUSers;
+    }
 
     public Set<SensorValues> getSensorValues() {
         return SensorValues;
@@ -52,10 +78,6 @@ public class Sensor {
     public void setSensorValues(Set<SensorValues> sensorValues) {
         SensorValues = sensorValues;
     }
-
-    @OneToMany(mappedBy="sensor", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<SensorValues> SensorValues;
 
     public String getNfc() {
         return nfc;

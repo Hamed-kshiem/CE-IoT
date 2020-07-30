@@ -35,4 +35,30 @@ export class WebSocketServiceService {
 
   public closeWebSocket() {
     this.webSocket.close();
-  }}*/
+  }}
+
+  text: string;
+
+  constructor(public webSocketService: WebSocketServiceService) {}
+
+  ngOnInit(): void {
+    this.webSocketService.openWebSocket();
+  }
+
+  ngOnDestroy(): void {
+    this.webSocketService.closeWebSocket();
+  }
+
+  sendMessage() {
+    const x = {
+      username: 'alex121',
+      firstname: 'alex',
+      lastname: 'test',
+      password: 'admin',
+      fingerprint: 'fingerprintvalue',
+    };
+
+    this.webSocketService.sendMessage(JSON.stringify(x));
+  }
+
+  */
