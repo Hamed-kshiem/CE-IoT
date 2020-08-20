@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "principalRequestValue",
+      "type": "java.lang.String",
+      "description": "Description for principalRequestValue."
+    },
+    {
+      "name": "principalRequestHeader",
+      "type": "java.lang.String",
+      "description": "Description for principalRequestHeader."
+    }
+  ] }

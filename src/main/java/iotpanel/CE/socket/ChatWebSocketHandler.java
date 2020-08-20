@@ -38,11 +38,11 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
-        System.out.println(webSocketMessage.getPayload().toString().substring(1, webSocketMessage.getPayload().toString().length()-1).replaceAll("\\\\",""));//.replaceAll("\\\\","")
-        User convertedObject = new Gson().fromJson(webSocketMessage.getPayload().toString().substring(1, webSocketMessage.getPayload().toString().length()-1).replaceAll("\\\\",""), User.class);
-
+   //     System.out.println(webSocketMessage.getPayload().toString().substring(1, webSocketMessage.getPayload().toString().length()-1).replaceAll("\\\\",""));//.replaceAll("\\\\","")
+       // User convertedObject = new Gson().fromJson(webSocketMessage.getPayload().toString().substring(1, webSocketMessage.getPayload().toString().length()-1).replaceAll("\\\\",""), User.class);
+        System.out.println(webSocketMessage.getPayload().toString());
         // Show it.
-      System.out.println(convertedObject);
+    //  System.out.println(convertedObject);
        // ObjectMapper mapper = new ObjectMapper();
        // Map<String,Object> map = mapper.readValue((DataInput) webSocketMessage.getPayload(), Map.class);
         for(WebSocketSession mainwebSocketSession : webSocketSessions){
@@ -68,5 +68,8 @@ public class ChatWebSocketHandler implements WebSocketHandler {
         return false;
     }
 
+    public synchronized Integer getOnlineCount() {
+        return webSocketSessions.size();
+    }
 
 }

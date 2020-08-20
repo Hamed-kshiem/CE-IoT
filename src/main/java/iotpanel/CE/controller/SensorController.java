@@ -4,15 +4,13 @@ import iotpanel.CE.model.Sensor;
 import iotpanel.CE.model.SensorValues;
 import iotpanel.CE.repositories.SensorRepository;
 import iotpanel.CE.repositories.SensorValuesRepository;
+import iotpanel.CE.socket.ChatWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
- 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -22,6 +20,8 @@ public class SensorController {
     SensorRepository Sensor;
     @Autowired
     SensorValuesRepository sensorValue;
+    @Autowired
+    ChatWebSocketHandler socketHandler;
 
     @RequestMapping(value = {"", "/"})
     public List<Sensor> getall() {
@@ -68,9 +68,11 @@ public class SensorController {
 */
     @PostMapping("/insert/{id}/values")
     public Optional<SensorValues> addSensorValue(@PathVariable(value = "id") String Sensorid, @RequestBody SensorValues SensorValueBody) {
+        System.out.println(SensorValueBody);
         return Sensor.findById(Sensorid).map(Sensor -> {
             SensorValueBody.setSensor(Sensor);
             return sensorValue.save(SensorValueBody);
+            
         });
     }
 
@@ -91,5 +93,20 @@ public class SensorController {
         Sensor sensor = Sensor.findById(sensorID).get();
         Sensor.save(sensor);
         return new ResponseEntity("Sensor was updated", HttpStatus.MULTI_STATUS);
+    }
+
+    @GetMapping("/favsensorvalues")
+    public Map<Object, Object> getFavSensors() {
+        Map<Object, Object> FavSenors = new HashMap<>();
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 1"),  new AbstractMap.SimpleEntry<String, Integer>("value", 23));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 2"),  new AbstractMap.SimpleEntry<String, Integer>("value", 15));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 3"),  new AbstractMap.SimpleEntry<String, Integer>("value", 30));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 4"),  new AbstractMap.SimpleEntry<String, Integer>("value", 25));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 5"),  new AbstractMap.SimpleEntry<String, Integer>("value", 17));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 6"),  new AbstractMap.SimpleEntry<String, Integer>("value", 8));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 7"),  new AbstractMap.SimpleEntry<String, Integer>("value", 10));
+        FavSenors.put( new AbstractMap.SimpleEntry<String, String>("name", "Room 8"),  new AbstractMap.SimpleEntry<String, Integer>("value", 12));
+
+        return  FavSenors;
     }
 }
