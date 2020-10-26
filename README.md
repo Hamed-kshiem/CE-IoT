@@ -4,4 +4,4 @@ CE IoT Panel "IoT architecture"
 
 ## test
 
-hit 2
+hit 23
