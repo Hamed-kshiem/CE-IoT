@@ -4,4 +4,4 @@ CE IoT Panel "IoT architecture"
 
 ## test
 
-hit 234544434eds
+hit 234544434edser
