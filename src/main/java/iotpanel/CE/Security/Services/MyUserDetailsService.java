@@ -5,6 +5,8 @@
 
 package iotpanel.CE.Security.Services;
 
+import iotpanel.CE.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +18,10 @@ import java.util.ArrayList;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    UserRepository user;
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return new User("foo", "foo",
-                new ArrayList<>());
+        return user.findByUsername(s);
     }
 }

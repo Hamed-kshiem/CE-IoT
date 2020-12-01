@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 @Table(name="lastlogin")
 public class LastLogin {
@@ -25,5 +27,9 @@ public class LastLogin {
     @JsonIgnore
     @JoinColumn(name="user_app")//, nullable=false
     private User user;
+
+    @Column(name="date")
+    Date loginTime;
+
 
 }

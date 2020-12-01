@@ -8,6 +8,8 @@ package iotpanel.CE.Security;
 
 import iotpanel.CE.Security.Services.MyUserDetailsService;
 import iotpanel.CE.Security.util.JwtUtil;
+import iotpanel.CE.model.User;
+import iotpanel.CE.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +30,7 @@ import java.security.SignatureException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private UserRepository userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -49,7 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            User userDetails = this.userDetailsService.findByEmail(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
 

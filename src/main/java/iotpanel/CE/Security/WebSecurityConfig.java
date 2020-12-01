@@ -70,18 +70,18 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println(principalRequestHeader);
         System.out.println(principalRequestValue);
 
-        httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll().
+        httpSecurity.cors().and().csrf().disable()
+                .authorizeRequests().antMatchers("/auth/**","/chat/**").permitAll().
                 anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).addFilterBefore(filter,APIKeyAuthFilter.class);
 
-        httpSecurity.
-                antMatcher("/user/**").
+      /*  httpSecurity.
+                antMatcher("/auth/**").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilter(filter).authorizeRequests();
+                and().addFilter(filter).authorizeRequests();*/
 
     }
 

@@ -46,11 +46,11 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println(principalRequestHeader);
         System.out.println(principalRequestValue);
 
-        httpSecurity.
-                antMatcher("/user/**").
+       /* httpSecurity.
+                antMatcher("/auth/**").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilter(filter).authorizeRequests().anyRequest().authenticated();
+                and().addFilter(filter).authorizeRequests().anyRequest().authenticated();*/
     }
 
 }

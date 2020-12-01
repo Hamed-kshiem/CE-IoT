@@ -12,15 +12,19 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
 
     private final static String CHAT_ENDPOINT = "/chat";
+    private final static String SENSOR_ENDPOINT = "/chat/sensor/**";
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(getChatWebSocketHandler(),CHAT_ENDPOINT )
-                .setAllowedOrigins("*");
+        webSocketHandlerRegistry.addHandler(getChatWebSocketHandler(),CHAT_ENDPOINT ).addHandler(getSensorWebSocketHandler(),SENSOR_ENDPOINT).setAllowedOrigins("*");
     }
 
     @Bean
     public WebSocketHandler getChatWebSocketHandler(){
         return new ChatWebSocketHandler();
+    }
+    @Bean
+    public WebSocketHandler getSensorWebSocketHandler(){
+        return new SensorWebSocketHandler();
     }
 }
